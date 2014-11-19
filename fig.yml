@@ -1,0 +1,20 @@
+mysql:
+  image: mysql
+  environment:
+    MYSQL_ROOT_PASSWORD: mysql
+  volumes:
+    - .:/amazon-docker-test
+redis:
+  image: redis
+  ports:
+    - "6379:6379"
+web:
+  build: .
+  command: bundle exec rails s
+  volumes:
+    - .:/amazon-docker-test
+  ports:
+    - "3000:3000"
+  links:
+    - mysql
+    - redis
